@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> jQuery manipulasi Dokumen html </title>
+</head>
+<body>
+    
+    <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias eius incidunt deserunt tempora quam modi fugiat dolor? Ut, laudantium! Nihil ducimus, atque odio deserunt debitis consectetur est sint itaque, ut optio amet animi molestiae! At sequi minima explicabo commodi? Labore iste, eveniet nisi, alias harum nulla minima minus quod debitis suscipit voluptatibus autem fugiat eum nemo inventore eaque enim non nesciunt. Quia, nesciunt corporis cum itaque hic autem fuga, quod dignissimos at similique sit necessitatibus, consequuntur aperiam? Odit ab amet ipsam accusamus architecto, in deserunt? Deserunt nulla aliquam optio, maxime porro quis dolorum fuga, doloribus quia fugiat voluptatibus magni necessitatibus? Corporis obcaecati totam hic ad minus aliquid rem corrupti, praesentium fuga asperiores distinctio est repellat consequuntur fugiat provident, saepe magnam laborum sit unde dolores enim quas possimus optio. Quaerat, possimus accusantium non corporis laudantium ipsam alias dolores quod minus illum delectus distinctio velit, voluptas perferendis doloremque quas magni qui blanditiis molestias repudiandae deleniti porro, et dolorum! Aut hic sunt quaerat dolorum. Voluptatibus dolorem ipsam repellat repellendus dolor numquam fugit fugiat consequuntur porro, rem explicabo perferendis expedita hic eum itaque officiis illum accusantium magni sapiente culpa. Ut molestias qui accusantium eveniet dignissimos dicta excepturi provident! Soluta sed beatae in at aperiam!
+    </p>
+    <button class="cmdTampil"> Tampilkan Teks </button>
+
+    <script src="jquery/jquery-3.7.1.min.js"></script>
+    <script>
+        $(function(){
+            $('.cmdTampil').hide()
+            $('p').on('click', function(){
+                $(this).hide(500)
+                $(".cmdTampil").show()
+            })
+            
+            $(".cmdTampil").on("click", function(){
+                $('p').show(1000)
+                $(this).hide()
+            })
+        })
+    </script>
+
+</body>
+</html>

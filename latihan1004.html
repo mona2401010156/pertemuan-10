@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> jQuery </title>
+</head>
+<body>
+    
+    <p id="viewText"> ketik teks </p>
+
+    <input type="text" id="txGANTI">
+    <button id="cmdGANTI"> Ganti Text </button>
+
+
+    <script src="jquery/jquery-3.7.1.min.js"></script>
+    <script>
+         $(function(){
+              $('#viewText').html("pada <strong> suatu </strong> hari")
+            
+              $("#cmdGANTI").on('click', function(){
+                let txbaru = $("#txGANTI").val()
+                $('#viewText').html(txbaru)
+              })
+
+         })
+</script>
+
+
+</body>
+</html>
