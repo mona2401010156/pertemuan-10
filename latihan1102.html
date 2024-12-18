@@ -10,31 +10,40 @@
         text-align: right;
         font-size: 20px;
         font-weight: bold;
-        text-shadow: 2px 2px 10px rgb(83, 167, 139);
+        text-shadow: 2px 2px 10px aquamarine;
+       
       }
       .deskripsi{
         text-align: justify;
-
+      }
+      .bingkai{
+        border-radius: 20px 0px;
+      }
+      .produkitem{
+        height: 200px;
+        text-align: center;
+        object-fit: cover;
+      }
+      .card-title{
+        font-size: 16px;
       }
     </style>
   </head>
   <body>
-    
     <div class="container">
 
-      <div class="row">
-        <div class="col-6">
-          <div id="judul" class=" judul">isi judul-judulan</div>
-          <div id="deskripsi" class="deskripsi">deskripsi</div>
-          <div class="project">
-            <a href="#produk" class="btn btn-info"> Cek Produk</a>
-          </div>
-        </div>
-
+        <div class="row">
+            <div class="col-6">
+              <div id="judul" class="judul">isi judul-judulan</div>
+              <div id="deskripsi" class="deskripsi">deskripsi</div>
+              <div class="project">
+                <a href="#produk" class="btn btn-info">Cek Produk</a>
+              </div>
+            </div>
             <div class="col">
                 <div id="carouselExample" class="carousel slide">
 
-                    <div class="carousel-inner" id="sliderimg"></div>
+                    <div class="carousel-inner bingkai" id="sliderimg"></div>
 
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
                       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -46,19 +55,20 @@
                     </button>
                   </div>
             </div>
-
         </div>
-
 
         <div class="produk">
           <a name="produk"></a>
+
+          <div id="produklist"></div>
 
         </div>
 
         <footer class="text-muted" style="clear: both;">
           <a href="#">top</a>
-          <p id="kopirig">Copyright 2024</p>
+          <P id="kopirig">Copyright 2024</P>
         </footer>
+
 
     </div>
 
@@ -68,33 +78,63 @@
       $(function(){
         var URLAPI = "https://apimhstiki.ptov.my.id"
         var NIM = "2401010156"
+        let urlProduk = URLAPI+"/"+NIM+"/produk/list"
+        //console.log(urlProduk)
 
         $.ajax({
-          url:URLAPI+"/slideshow/"+NIM,
-          method: "GET", 
-          dataType: "json",
-          success:function(data){
-            $("#judul").html(data.judul)
-            $("#deskripsi").html(data.deskripsi)
-            $("#kopirig").html("Copyright 2024 &copy; "+data.judul+" by "+data.nama)
+          url: URLAPI+'/slideshow/'+NIM,
+          method: 'GET',
+          dataType: 'json',
+          success:function(dta){
+           $("#judul").html(dta.judul)
+           $("#deskripsi").html(dta.deskripsi)
+           $("#kopirig").html("Copyright 2024 &copy; "+dta.judul+" by "+dta.nama)
+            
+           var slideimg = ""
 
-            var slideimg = ""
-            data.images.forEach(function(img, index){
-              var aktif = index === 0 ? "active" : ""
-
+           dta.images.forEach(function(image, index){
+             var aktif = index == 0 ? 'active' : ''
+            
             slideimg += `
-            <div class="carousel-item ${aktif}">
-                    <img src="${img.url}" class="d-block w-100" alt="${img.alt}">
-            </div>`
-            })
-            console.log(slideimg)
-            $("#sliderimg").html(slideimg)
-          }, 
+           <div class="carousel-item ${aktif}">
+              <img src="${image.url}" class="d-block w-100" alt="${image.alt}">
+           </div>`
+          })
+          $("#sliderimg").html(slideimg)
 
-          error:function(){
-            console.log("Ajax Error:", status, error)
+         },
+          error:function(xhr, status, error){
+            console.log("Ajax Error: ",status, error)
           }
         })
+
+        $.ajax({
+          url: urlProduk,
+          method: 'GET',
+          dataType: 'json',
+          success: function(dta){
+            if(dta && dta.error==0){
+              let tProduk = ""
+              dta.produk.forEach(function(brg,index){
+                tProduk += `<div class="card" style="width: 15rem; float: left; margin:15px;">
+                  <img src="${brg.IMG}" class="card-img-top produkitem" alt="${brg.ITEM}">
+                  <div class="card-body">
+                    <h5 class="card-title">${brg.ITEM}</h5>
+                    <p class="card-text">Rp. ${brg.HRGJUAL},-</p>
+                    <a href="#" class="btn btn-primary">detail</a>
+                    <a href="#" class="btn btn-warning">Beli</a>
+                  </div>
+                </div>`
+              })
+              $('#produklist').html(tProduk)
+            }else{
+              console.log("tidak ada data produk")
+            } 
+          },
+          error: function(xhr,status,error){
+            console.log("Ajax Error: ",status,error)
+          }
+       })
 
       })
     </script>
